@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from .models import Post, Tag
 from .utils import ObjectDetailMixin
+from .forms import TagForm
 
 def posts_list(request):
     posts = Post.objects.all()
@@ -27,6 +28,14 @@ def tags_list(request):
 class TagDetail(ObjectDetailMixin, View):
         model = Tag
         template = 'blog/tag_detail.html'
+
+class TagCreate(View):
+    def get(self, request):
+        form = TagForm()
+        return render(request, 'blog/tag_create.html', context={'form':form})
+        
+
+
 #    def get(self, request, slug):
 #       tag = Tag.objects.get(slug__iexact=slug)
 #        tag = get_object_or_404(Tag, slug__iexact=slug)
